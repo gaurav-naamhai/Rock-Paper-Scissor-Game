@@ -28,4 +28,51 @@ function getComputerChoice() {
     else if(randomno == 2){
         return "Scissor"
     }
+}\
+
+
+2. problem:
+if (humanChoice=="rock" && computerChoice=="scissor"){
+    return  humanScore+= 1;
+    console.log("You Win");
+    return;
 }
+
+it was breaking function at first return and was never able to get console.log() statement
+solution:
+if (humanChoice=="rock" && computerChoice=="scissor"){
+     humanScore+= 1;
+    console.log("You Win");
+    return;
+}
+
+
+3. problem:
+i by mistake didnt used  () here now solved:
+earlier:
+function getHumanChoice() {
+  if (choice.toLowerCase=="rock"){
+    return "rock"
+  }
+  else if(choice.toLowerCase == "paper"){
+    return "paper"
+  }
+  else if(choice.toLowerCase == "scissor"){
+    return "scissor"
+  }}
+now:
+function getHumanChoice() {
+  if (choice.toLowerCase()=="rock"){
+    return "rock"
+  }
+  else if(choice.toLowerCase() == "paper"){
+    return "paper"
+  }
+  else if(choice.toLowerCase() == "scissor"){
+    return "scissor"
+  }}
+  what happened: prompt was not able to know to get what value and how to check that
+
+
+
+  4.
