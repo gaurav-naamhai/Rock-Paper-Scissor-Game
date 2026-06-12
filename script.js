@@ -13,4 +13,15 @@ function getComputerChoice() {
         return "Scissor"
     }
 }
-console.log(getComputerChoice());
+let choice = prompt("Rock , Paper or Scissor?");
+function getHumanChoice() {
+  if (choice=="rock"){
+    return "Rock"
+  }
+  else if(choice == "paper"){
+    return "Paper"
+  }
+  else if(choice == "scissor"){
+    return "Scissor"
+  }
+}
