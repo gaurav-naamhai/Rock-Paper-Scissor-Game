@@ -30,26 +30,44 @@ let computerScore=0;
 function playRound(humanChoice, computerChoice){
 if (humanChoice=="rock" && computerChoice=="paper"){
      computerScore+= 1;
+    console.log("You Lose");
+    console.log("Your score:",humanScore);
+    console.log("PC score:",computerScore);
     return;
 }
  if  (humanChoice =="paper" && computerChoice=="scissor"){
       computerScore+= 1;
+    console.log("You Lose");
+     console.log("Your score:",humanScore);
+     console.log("PC score:",computerScore);
     return;
 }
  if (humanChoice=="scissor" && computerChoice=="rock"){
      computerScore+= 1;
+    console.log("You Lose");
+     console.log("Your score:",humanScore);
+     console.log("PC score:",computerScore);
     return;
 }
  if (humanChoice =="paper" && computerChoice=="rock"){
      humanScore+= 1;
+    console.log("You Win");
+     console.log("Your score:",humanScore);
+     console.log("PC score:",computerScore);
     return;
 }
  if (humanChoice =="scissor" && computerChoice=="paper"){
       humanScore+= 1;
+    console.log("You Win");
+     console.log("Your score:",humanScore);
+     console.log("PC score:",computerScore);
     return;
 }
  if (humanChoice=="rock" && computerChoice=="scissor"){
      humanScore+= 1;
+    console.log("You Win");
+     console.log("Your score:",humanScore);
+     console.log("PC score:",computerScore);
     return;
 }
 if(humanChoice==computerChoice)  { 
@@ -67,7 +85,7 @@ playRound(getHumanChoice(), getComputerChoice());
 playRound(getHumanChoice(), getComputerChoice());
 playRound(getHumanChoice(), getComputerChoice());
 playRound(getHumanChoice(), getComputerChoice());
-if(humanScore>=3){console.log("You Win The Game,Congratulations!!!")}
-if(computerScore>=3){console.log("You lose The Game,Sorry :(")}
+if(humanScore>=3){alert("You Win The Game,Congratulations!!!")}
+if(computerScore>=3){alert("You lose The Game,Sorry :(")}
 }
 playGame();
