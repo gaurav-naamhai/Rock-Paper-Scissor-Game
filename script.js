@@ -1,8 +1,8 @@
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
-let randomno = getRandomInt(3);
 function getComputerChoice() {
+   let randomno = getRandomInt(3);
     if (randomno == 0){
         return "rock"
     }
@@ -13,8 +13,9 @@ function getComputerChoice() {
         return "scissor"
     }
 }
-let choice = prompt("Rock , Paper or Scissor?");
+
 function getHumanChoice() {
+  let choice = prompt("Rock , Paper or Scissor?");
   if (choice.toLowerCase()=="rock"){
     return "rock"
   }
@@ -23,45 +24,50 @@ function getHumanChoice() {
   }
   else if(choice.toLowerCase() == "scissor"){
     return "scissor"
-  }
-}
+  }}
 let humanScore=0;
 let computerScore=0;
 function playRound(humanChoice, computerChoice){
 if (humanChoice=="rock" && computerChoice=="paper"){
      computerScore+= 1;
-    console.log("You Lose");
     return;
 }
-if (humanChoice =="paper" && computerChoice=="scissor"){
+ if  (humanChoice =="paper" && computerChoice=="scissor"){
       computerScore+= 1;
-    console.log("You Lose");
     return;
 }
-if (humanChoice=="scissor" && computerChoice=="rock"){
+ if (humanChoice=="scissor" && computerChoice=="rock"){
      computerScore+= 1;
-    console.log("You Lose");
     return;
 }
-if (humanChoice =="paper" && computerChoice=="rock"){
+ if (humanChoice =="paper" && computerChoice=="rock"){
      humanScore+= 1;
-    console.log("You Win");
     return;
 }
-if (humanChoice =="scissor" && computerChoice=="paper"){
+ if (humanChoice =="scissor" && computerChoice=="paper"){
       humanScore+= 1;
-    console.log("You Win");
     return;
 }
-if (humanChoice=="rock" && computerChoice=="scissor"){
+ if (humanChoice=="rock" && computerChoice=="scissor"){
      humanScore+= 1;
-    console.log("You Win");
     return;
 }
-    console.log("Try Again");
+if(humanChoice==computerChoice)  { 
+  playRound(getHumanChoice(),getComputerChoice());
+  return;
+} 
 }
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
 
-playRound(humanSelection, computerSelection);
+
+
+function playGame(){
+playRound(getHumanChoice(), getComputerChoice());
+playRound(getHumanChoice(), getComputerChoice());
+playRound(getHumanChoice(), getComputerChoice());
+playRound(getHumanChoice(), getComputerChoice());
+playRound(getHumanChoice(), getComputerChoice());
+if(humanScore>=3){console.log("You Win The Game,Congratulations!!!")}
+if(computerScore>=3){console.log("You lose The Game,Sorry :(")}
+}
+playGame();
