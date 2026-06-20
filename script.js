@@ -1,3 +1,10 @@
+
+const rock = document.getElementById("rock");
+const paper = document.getElementById("paper");
+const scissor = document.getElementById("scissor");
+const div = document.getElementsByClassName("choose")
+const text = document.getElementById("text");
+
 function getRandomInt(max) {
   return Math.floor(Math.random() * max);
 }
@@ -13,79 +20,71 @@ function getComputerChoice() {
         return "scissor"
     }
 }
-
-function getHumanChoice() {
-  let choice = prompt("Rock , Paper or Scissor?");
-  if (choice.toLowerCase()=="rock"){
-    return "rock"
-  }
-  else if(choice.toLowerCase() == "paper"){
-    return "paper"
-  }
-  else if(choice.toLowerCase() == "scissor"){
-    return "scissor"
-  }}
 let humanScore=0;
 let computerScore=0;
+let playRoun=0;
+
 function playRound(humanChoice, computerChoice){
 if (humanChoice=="rock" && computerChoice=="paper"){
      computerScore+= 1;
-    console.log("You Lose");
-    console.log("Your score:",humanScore);
-    console.log("PC score:",computerScore);
+    text.innerText=`You Lose, Your score:${humanScore},PC score:${computerScore}`;
+    playRoun++;
+    declare();
     return;
 }
  if  (humanChoice =="paper" && computerChoice=="scissor"){
       computerScore+= 1;
-    console.log("You Lose");
-     console.log("Your score:",humanScore);
-     console.log("PC score:",computerScore);
+    text.innerText=`You Lose, Your score:${humanScore},PC score:${computerScore}`;
+    playRoun++;
+    declare();
     return;
 }
  if (humanChoice=="scissor" && computerChoice=="rock"){
      computerScore+= 1;
-    console.log("You Lose");
-     console.log("Your score:",humanScore);
-     console.log("PC score:",computerScore);
+    text.innerText=`You Lose, Your score:${humanScore},PC score:${computerScore}`;
+    playRoun++;
+    declare();
     return;
 }
  if (humanChoice =="paper" && computerChoice=="rock"){
      humanScore+= 1;
-    console.log("You Win");
-     console.log("Your score:",humanScore);
-     console.log("PC score:",computerScore);
+    text.innerText=`You Win, Your score:${humanScore},PC score:${computerScore}`;
+    playRoun++;
+    declare();
     return;
 }
  if (humanChoice =="scissor" && computerChoice=="paper"){
       humanScore+= 1;
-    console.log("You Win");
-     console.log("Your score:",humanScore);
-     console.log("PC score:",computerScore);
+    text.innerText=`You Win, Your score:${humanScore},PC score:${computerScore}`;
+    playRoun++;
+    declare();
     return;
 }
  if (humanChoice=="rock" && computerChoice=="scissor"){
      humanScore+= 1;
-    console.log("You Win");
-     console.log("Your score:",humanScore);
-     console.log("PC score:",computerScore);
+text.innerText=`You Win, Your score:${humanScore},PC score:${computerScore}`;
+playRoun++;
+declare();
     return;
 }
 if(humanChoice==computerChoice)  { 
-  playRound(getHumanChoice(),getComputerChoice());
+  playRound(humanChoice,getComputerChoice());
   return;
 } 
 }
-
-
-
-
-function playGame(){
-playRound(getHumanChoice(), getComputerChoice());
-playRound(getHumanChoice(), getComputerChoice());
-playRound(getHumanChoice(), getComputerChoice());
-playRound(getHumanChoice(), getComputerChoice());
-playRound(getHumanChoice(), getComputerChoice());
-if(humanScore>=3){alert("You Win The Game,Congratulations!!!")}
-if(computerScore>=3){alert("You lose The Game,Sorry :(")}
+function declare(){
+    if(playRoun==5){
+            if( humanScore>computerScore){
+ alert("You Won!!")
+    }
+   else if(  computerScore>humanScore){
+ alert("You lost,try again!!")
+    }
+    }
 }
-playGame();
+rock.addEventListener("click",()=>playRound("rock",getComputerChoice()));
+paper.addEventListener("click",()=>playRound("paper",getComputerChoice()));
+scissor.addEventListener("click",()=>playRound("scissor",getComputerChoice()));
+
+
+

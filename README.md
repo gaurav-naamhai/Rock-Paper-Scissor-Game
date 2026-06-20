@@ -140,3 +140,132 @@ if(humanChoice==computerChoice)  {
   playRound(getHumanChoice(),getComputerChoice());
   return;
 } 
+
+## Bug 6: DOM Element Passed Instead of String
+
+**In the event listeners:**
+```js
+// WRONG
+rock.addEventListener("click", () => playRound(rock, getComputerChoice()));
+
+// FIXED
+rock.addEventListener("click", () => playRound("rock", getComputerChoice()));
+```
+`rock` is an HTMLElement. Inside `playRound`, every comparison like `humanChoice == "rock"` always returned false. No round ever registered a result.
+
+---
+
+## Bug 7: Double Quotes Instead of Backticks on Template Literals
+
+```js
+// WRONG — prints literally "${humanScore}"
+text.innerText = "Your score:${humanScore}";
+
+// FIXED
+text.innerText = `Your score:${humanScore}`;
+```
+Template literal interpolation only works inside backticks. Double quotes treat `${...}` as plain text.
+
+---
+
+## Bug 8: Multiple `innerText` Assignments Overwriting Each Other
+
+```js
+// WRONG — only last line renders
+text.innerText = "You Lose";
+text.innerText = "Your score:${humanScore}";
+text.innerText = "PC score:${computerScore}";
+
+// FIXED — single assignment
+text.innerText = `You Lose, Your score:${humanScore}, PC score:${computerScore}`;
+```
+Each assignment replaces the previous. Only `PC score:${computerScore}` ever showed on screen.
+
+---
+
+## Bug 9: Infinite Recursion on Tie
+
+```js
+// WRONG — passes same fixed choices, loops forever → stack overflow
+if (humanChoice == computerChoice) {
+    playRound(humanChoice, computerChoice);
+    return;
+}
+
+// FIXED — rerolls computer choice
+if (humanChoice == computerChoice) {
+    playRound(humanChoice, getComputerChoice());
+    return;
+}
+```
+A tie should replay the round with a new computer choice. Passing the same `computerChoice` guaranteed another tie, infinitely.
+
+---
+
+## Bug 10: `declare()` / `playGame()` Called at Load Before Any Round
+
+```js
+// WRONG — scores are 0 at load, alert never triggers
+playGame();
+
+// WRONG — declare() runs once at load, then never again
+declare();
+```
+Both functions checked scores that hadn't changed yet. Fix: call `declare()` inside `playRound` after every non-tie round.
+
+---
+
+## Bug 11: Alert Code Unreachable (Dead Code After `return`)
+
+```js
+// WRONG — every if-block returns before reaching the alert
+function playRound(...) {
+    if (...) { ... return; }
+    if (...) { ... return; }
+    // alert code here — never reached
+    if (humanScore === 5) alert("You Won!!");
+}
+```
+Every execution path hit a `return` before the alert block. Fix: call `declare()` before each `return`, or restructure to a single exit point.
+
+---
+
+## Bug 12: `humanChoice` Undefined Inside `playGame()`
+
+```js
+// WRONG — humanChoice doesn't exist in this scope
+function playGame() {
+    playRound(humanChoice, getComputerChoice()); // ReferenceError
+}
+```
+`playGame()` tried to call `playRound` without knowing what the human chose. The game loop doesn't belong here — round tracking belongs inside `playRound` itself.
+
+---
+
+## Final Solution
+
+Track rounds inside `playRound` using a counter. Call `declare()` before every `return`. No standalone `playGame()` or `declare()` calls outside the flow.
+
+```js
+let humanScore = 0;
+let computerScore = 0;
+let playRoun = 0;
+
+function playRound(humanChoice, computerChoice) {
+    if (humanChoice == computerChoice) {
+        playRound(humanChoice, getComputerChoice()); // reroll on tie
+        return;
+    }
+    // ... result logic, then:
+    playRoun++;
+    declare();
+    return;
+}
+
+function declare() {
+    if (playRoun == 5) {
+        if (humanScore > computerScore) alert("You Won!!");
+        else if (computerScore > humanScore) alert("You lost, try again!!");
+    }
+}
+```
